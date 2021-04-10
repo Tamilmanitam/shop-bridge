@@ -5,6 +5,31 @@ import { MatSort } from '@angular/material/sort';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+export interface Electronics {
+  name: string;
+  model: string;
+  price: number;
+  specs: string;
+  weight: number;
+  country: string
+}
+
+const ELEMENT_DATA: Electronics[] = [
+  { name: "Apple", model: 'Model 1', price: 50000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 2', price: 60000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 3', price: 70000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 4', price: 80000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 5', price: 90000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 6', price: 100000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 7', price: 110000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 1', price: 50000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 2', price: 60000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 3', price: 70000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 4', price: 80000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 5', price: 90000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 6', price: 100000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+  { name: "Apple", model: 'Model 7', price: 110000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
+];
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,14 +48,17 @@ export class AppComponent {
   displayedColumns: string[] = ['name', 'model', 'price', 'specs', 'weight', 'country', 'action'];
   dataSource = new MatTableDataSource<Electronics>(ELEMENT_DATA);
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
   }
 
   applyFilter(event: Event) {
@@ -79,21 +107,4 @@ export class AppComponent {
   }
 }
 
-export interface Electronics {
-  name: string;
-  model: string;
-  price: number;
-  specs: string;
-  weight: number;
-  country: string
-}
 
-const ELEMENT_DATA: Electronics[] = [
-  { name: "Apple", model: 'Model 1', price: 50000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 2', price: 60000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 3', price: 70000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 4', price: 80000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 5', price: 90000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 6', price: 100000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 7', price: 110000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-];
