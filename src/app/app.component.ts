@@ -22,13 +22,6 @@ const ELEMENT_DATA: Electronics[] = [
   { name: "Apple", model: 'Model 5', price: 90000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
   { name: "Apple", model: 'Model 6', price: 100000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
   { name: "Apple", model: 'Model 7', price: 110000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 1', price: 50000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 2', price: 60000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 3', price: 70000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 4', price: 80000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 5', price: 90000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 6', price: 100000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
-  { name: "Apple", model: 'Model 7', price: 110000, specs: 'A14 Bionic chip, the fastest chip ever in a smartphone', weight: 200, country: "USA" },
 ];
 @Component({
   selector: 'app-root',
@@ -54,11 +47,11 @@ export class AppComponent {
   constructor(private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator
+    this.refreshData()
   }
 
   applyFilter(event: Event) {
@@ -74,7 +67,16 @@ export class AppComponent {
     } else {
       this.showList = true
       ELEMENT_DATA.push({ name: this.name.value, model: this.model.value, price: this.price.value, specs: this.specs.value, weight: this.weight.value, country: this.country })
+      this.refreshData()
     }
+  }
+
+  refreshData() {
+    setTimeout(() => {
+      this.dataSource.data = this.dataSource.data;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator
+    }, 0)
   }
 
   editRow(data) {
@@ -99,11 +101,12 @@ export class AppComponent {
 
   deleteRow(data) {
     ELEMENT_DATA.splice(this.dataSource.filteredData.indexOf(data), 1)
-    this.dataSource.data = this.dataSource.data;
+    this.refreshData()
   }
 
   backToList() {
     this.showList = true
+    this.refreshData()
   }
 }
 
